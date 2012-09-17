@@ -13643,6 +13643,7 @@ var testFixture = {
                 end: { line: 1, column: 64 }
             }
         },
+        /*
         'for each (let x in {}) {};' : {
             type: 'ForInStatement',
             left: {
@@ -13752,7 +13753,7 @@ var testFixture = {
                     column: 25
                 }
             }
-        }
+        }*/
     },
 
     'continue statement': {
@@ -21678,9 +21679,15 @@ var testFixture = {
             lineNumber: 1,
             column: 12,
             message: 'Error: Line 1: Unexpected token ILLEGAL'
+        },
+
+        'for each (let x in {}) {};' : {
+            index: 3,
+            lineNumber: 1,
+            column: 4,
+            message: 'Error: Line 1: Each is not supported'
         }
     },
-
     'API': {
         'parse()': {
             call: 'parse',

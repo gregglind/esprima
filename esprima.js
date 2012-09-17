@@ -204,7 +204,8 @@ parseYieldExpression: true
         StrictLHSPrefix:  'Prefix increment/decrement may not have eval or arguments operand in strict mode',
         StrictReservedWord:  'Use of future reserved word in strict mode',
         NoFromAfterImport: 'Missing from after import',
-        NoYieldInGenerator: 'Missing yield in generator'
+        NoYieldInGenerator: 'Missing yield in generator',
+        EachNotAllowed:  'Each is not supported'
     };
 
     // See also tools/generate-unicode-regex.py.
@@ -3080,12 +3081,20 @@ parseYieldExpression: true
         expectKeyword('for');
 
         // http://wiki.ecmascript.org/doku.php?id=proposals:iterators_and_generators&s=each
-        if (matchContextualKeyword("each")) {
-            lex();
-            each = true;
+        if (extra.each) {
+            if (matchContextualKeyword("each")) {
+                lex();
+                each = true;
+            } else {
+                each = false;
+            };
         } else {
-            each = false;
-        };
+            if (matchContextualKeyword("each")) {
+                throwError({},Messages.EachNotAllowed)
+            } else {
+                each = false;
+            };
+        }
         expect('(');
 
         if (match(';')) {
@@ -4787,6 +4796,7 @@ parseYieldExpression: true
             if (typeof options.tolerant === 'boolean' && options.tolerant) {
                 extra.errors = [];
             }
+            extra.each = (typeof options.each === 'boolean') && options.each;
         }
 
         if (length > 0) {
