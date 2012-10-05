@@ -1,12 +1,12 @@
 {
-    "name": "esprima",
+    "name": "esprima-moz",
     "description": "ECMAScript parsing infrastructure for multipurpose analysis",
     "homepage": "http://esprima.org",
     "main": "esprima.js",
     "bin": {
-        "esparse": "./bin/esparse.js"
+        "esparse-moz": "./bin/esparse.js"
     },
-    "version": "1.0.0-dev-harmony",
+    "version": "1.0.0-dev-harmony-moz",
     "engines": {
         "node": ">=0.4.0"
     },
@@ -17,7 +17,7 @@
     }],
     "repository": {
         "type": "git",
-        "url": "http://github.com/ariya/esprima.git"
+        "url": "http://github.com/gregglind/esprima.git#moz"
     },
     "licenses": [{
         "type": "BSD",
