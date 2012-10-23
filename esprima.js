@@ -3535,7 +3535,7 @@ parseYieldExpression: true
     // 12.14 The try statement
 
     function parseCatchClause() {
-        var param;
+        var param, guard;
 
         expectKeyword('catch');
 
@@ -3547,12 +3547,21 @@ parseYieldExpression: true
                 throwErrorTolerant({}, Messages.StrictCatchVariable);
             }
         }
-        expect(')');
+
+        // spidermonkey:  catch (e if expression)
+        if (match(')')) {
+            expect(')')
+        } else {
+            expectKeyword('if');
+            guard = parseExpression();
+            expect(')');
+        }
 
         return {
             type: Syntax.CatchClause,
             param: param,
-            body: parseBlock()
+            body: parseBlock(),
+            guard: guard
         };
     }
 
